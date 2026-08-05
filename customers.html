@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Directory - Apex Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="logo-brand">
+          <div class="logo-icon"><i class="fas fa-university"></i></div>
+          <div class="logo-text">Apex<span>Bank</span></div>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn"><i class="fas fa-chevron-left"></i></button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN NAVIGATION</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="dashboard.html"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a></li>
+          <li class="nav-item active"><a href="customers.html"><i class="fas fa-users"></i><span>Customers</span></a></li>
+          <li class="nav-item"><a href="accounts.html"><i class="fas fa-wallet"></i><span>Accounts</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SERVICES</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="deposit.html"><i class="fas fa-arrow-down"></i><span>Deposit Money</span></a></li>
+          <li class="nav-item"><a href="withdraw.html"><i class="fas fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li class="nav-item"><a href="transfer.html"><i class="fas fa-exchange-alt"></i><span>Fund Transfer</span></a></li>
+          <li class="nav-item"><a href="transactions.html"><i class="fas fa-list-alt"></i><span>Transactions</span></a></li>
+          <li class="nav-item"><a href="loans.html"><i class="fas fa-hand-holding-usd"></i><span>Loans & EMI</span></a></li>
+          <li class="nav-item"><a href="cards.html"><i class="fas fa-credit-card"></i><span>Cards</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SYSTEM</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="reports.html"><i class="fas fa-file-contract"></i><span>Reports</span></a></li>
+          <li class="nav-item"><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+          <li class="nav-item"><a href="profile.html"><i class="fas fa-user-circle"></i><span>Profile</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar session-user-avatar">AW</div>
+          <div class="user-info">
+            <div class="user-name session-user-name">Alexander Wright</div>
+            <div class="user-role session-user-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <div class="global-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search accounts, customers, txns...">
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="topbar-action-btn theme-toggle-btn"><i class="fas fa-moon theme-icon"></i></button>
+          <div style="position: relative;">
+            <button class="topbar-action-btn" id="notificationBtn">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge" id="notificationBadge">3</span>
+            </button>
+            <div class="dropdown-menu notification-dropdown" id="notificationDropdownMenu">
+              <div class="notification-header">
+                <h5>Notifications</h5>
+                <a href="#" onclick="BMS_DB.set(DB_KEYS.NOTIFICATIONS, []); initNotifications();">Clear All</a>
+              </div>
+              <div class="notification-list" id="notificationList"></div>
+            </div>
+          </div>
+
+          <div class="topbar-user-profile">
+            <button class="user-dropdown-btn" id="userProfileDropdownBtn">
+              <div class="avatar session-user-avatar">AW</div>
+              <div class="user-dropdown-info">
+                <div class="name session-user-name">Alexander Wright</div>
+                <div class="role session-user-role">Administrator</div>
+              </div>
+              <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+            </button>
+            <div class="dropdown-menu" id="userDropdownMenu">
+              <div class="dropdown-header">
+                <p class="session-user-name">Alexander Wright</p>
+                <span class="session-user-role">Administrator</span>
+              </div>
+              <a href="profile.html" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
+              <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" onclick="logout()" class="dropdown-item" style="color: var(--danger-color);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>Customer Directory</h2>
+            <p>Manage bank customers, profile details, and account onboarding.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-primary" onclick="openModal('addCustomerModal')"><i class="fas fa-user-plus"></i> Add New Customer</button>
+          </div>
+        </div>
+
+        <!-- Filter Card -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <div class="input-icon-group" style="flex: 1;">
+              <i class="fas fa-search"></i>
+              <input type="text" id="customerSearchInput" class="form-control" placeholder="Search by customer name, email or ID...">
+            </div>
+          </div>
+        </div>
+
+        <!-- Customers Table Card -->
+        <div class="card">
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Customer Details</th>
+                  <th>Phone Number</th>
+                  <th>Tier</th>
+                  <th>Total Balance</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="customersTableBody">
+                <!-- Populated by customers.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add New Customer Modal -->
+  <div class="modal-backdrop" id="addCustomerModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-user-plus text-primary"></i> Add New Customer</h4>
+        <button class="modal-close-btn" onclick="closeModal('addCustomerModal')">&times;</button>
+      </div>
+      <form id="addCustomerForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="custName" class="form-control" placeholder="e.g. Robert Miller" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="custEmail" class="form-control" placeholder="robert@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" id="custPhone" class="form-control" placeholder="+1 (555) 321-9876" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Customer Tier</label>
+            <select class="form-select" id="custType">
+              <option value="Standard">Standard Account</option>
+              <option value="Premium">Premium Member</option>
+              <option value="Business">Business Account</option>
+              <option value="VIP">VIP Private Banking</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Initial Opening Deposit (Rs.)</label>
+            <input type="number" id="custDeposit" class="form-control" placeholder="1000.00" min="0" step="0.01" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('addCustomerModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Customer Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/customers.js"></script>
+</body>
+</html>

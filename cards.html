@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cards Portfolio - Apex Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="logo-brand">
+          <div class="logo-icon"><i class="fas fa-university"></i></div>
+          <div class="logo-text">Apex<span>Bank</span></div>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn"><i class="fas fa-chevron-left"></i></button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN NAVIGATION</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="dashboard.html"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a></li>
+          <li class="nav-item"><a href="customers.html"><i class="fas fa-users"></i><span>Customers</span></a></li>
+          <li class="nav-item"><a href="accounts.html"><i class="fas fa-wallet"></i><span>Accounts</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SERVICES</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="deposit.html"><i class="fas fa-arrow-down"></i><span>Deposit Money</span></a></li>
+          <li class="nav-item"><a href="withdraw.html"><i class="fas fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li class="nav-item"><a href="transfer.html"><i class="fas fa-exchange-alt"></i><span>Fund Transfer</span></a></li>
+          <li class="nav-item"><a href="transactions.html"><i class="fas fa-list-alt"></i><span>Transactions</span></a></li>
+          <li class="nav-item"><a href="loans.html"><i class="fas fa-hand-holding-usd"></i><span>Loans & EMI</span></a></li>
+          <li class="nav-item active"><a href="cards.html"><i class="fas fa-credit-card"></i><span>Cards</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SYSTEM</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="reports.html"><i class="fas fa-file-contract"></i><span>Reports</span></a></li>
+          <li class="nav-item"><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+          <li class="nav-item"><a href="profile.html"><i class="fas fa-user-circle"></i><span>Profile</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar session-user-avatar">AW</div>
+          <div class="user-info">
+            <div class="user-name session-user-name">Alexander Wright</div>
+            <div class="user-role session-user-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <div class="global-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search accounts, customers, txns...">
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="topbar-action-btn theme-toggle-btn"><i class="fas fa-moon theme-icon"></i></button>
+          <div style="position: relative;">
+            <button class="topbar-action-btn" id="notificationBtn">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge" id="notificationBadge">3</span>
+            </button>
+            <div class="dropdown-menu notification-dropdown" id="notificationDropdownMenu">
+              <div class="notification-header">
+                <h5>Notifications</h5>
+                <a href="#" onclick="BMS_DB.set(DB_KEYS.NOTIFICATIONS, []); initNotifications();">Clear All</a>
+              </div>
+              <div class="notification-list" id="notificationList"></div>
+            </div>
+          </div>
+
+          <div class="topbar-user-profile">
+            <button class="user-dropdown-btn" id="userProfileDropdownBtn">
+              <div class="avatar session-user-avatar">AW</div>
+              <div class="user-dropdown-info">
+                <div class="name session-user-name">Alexander Wright</div>
+                <div class="role session-user-role">Administrator</div>
+              </div>
+              <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+            </button>
+            <div class="dropdown-menu" id="userDropdownMenu">
+              <div class="dropdown-header">
+                <p class="session-user-name">Alexander Wright</p>
+                <span class="session-user-role">Administrator</span>
+              </div>
+              <a href="profile.html" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
+              <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" onclick="logout()" class="dropdown-item" style="color: var(--danger-color);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>Credit & Debit Cards</h2>
+            <p>Interactive 3D banking card dashboard. Click or hover over cards to flip!</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-primary" onclick="openModal('requestCardModal')"><i class="fas fa-credit-card"></i> Request New Card</button>
+          </div>
+        </div>
+
+        <!-- 3D Bank Cards Grid -->
+        <div class="cards-grid" id="cardsContainer">
+          <!-- Populated by cards.js -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Request Card Modal -->
+  <div class="modal-backdrop" id="requestCardModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-credit-card text-primary"></i> Issue New Card</h4>
+        <button class="modal-close-btn" onclick="closeModal('requestCardModal')">&times;</button>
+      </div>
+      <form id="requestCardForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Cardholder Name</label>
+            <input type="text" id="cardHolderInput" class="form-control" placeholder="e.g. SARAH JENKINS" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Card Type & Tier</label>
+            <select class="form-select" id="cardTypeSelect">
+              <option value="Visa Platinum Credit">Visa Platinum Credit</option>
+              <option value="Mastercard World Elite">Mastercard World Elite</option>
+              <option value="Visa Sapphire Debit">Visa Sapphire Debit</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Visual Card Design Theme</label>
+            <select class="form-select" id="cardThemeSelect">
+              <option value="default">Ocean Blue Gradient</option>
+              <option value="black">Midnight Slate (Black)</option>
+              <option value="purple">Royal Purple Gradient</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('requestCardModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Issue Digital Card</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/cards.js"></script>
+</body>
+</html>

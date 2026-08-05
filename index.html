@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Bank - Premium Management System</title>
+  <script src="assets/js/db.js"></script>
+  <script>
+    // Quick redirect based on auth session
+    document.addEventListener('DOMContentLoaded', function() {
+      const session = BMS_DB.get(DB_KEYS.SESSION);
+      if (session) {
+        window.location.href = 'dashboard.html';
+      } else {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</head>
+<body style="background-color: #0f172a; color: #ffffff; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif;">
+  <div style="text-align: center;">
+    <h2>Redirecting to Apex Bank Portal...</h2>
+  </div>
+</body>
+</html>

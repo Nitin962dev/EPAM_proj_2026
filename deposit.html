@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deposit Money - Apex Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="logo-brand">
+          <div class="logo-icon"><i class="fas fa-university"></i></div>
+          <div class="logo-text">Apex<span>Bank</span></div>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn"><i class="fas fa-chevron-left"></i></button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN NAVIGATION</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="dashboard.html"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a></li>
+          <li class="nav-item"><a href="customers.html"><i class="fas fa-users"></i><span>Customers</span></a></li>
+          <li class="nav-item"><a href="accounts.html"><i class="fas fa-wallet"></i><span>Accounts</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SERVICES</div>
+        <ul class="nav-list">
+          <li class="nav-item active"><a href="deposit.html"><i class="fas fa-arrow-down"></i><span>Deposit Money</span></a></li>
+          <li class="nav-item"><a href="withdraw.html"><i class="fas fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li class="nav-item"><a href="transfer.html"><i class="fas fa-exchange-alt"></i><span>Fund Transfer</span></a></li>
+          <li class="nav-item"><a href="transactions.html"><i class="fas fa-list-alt"></i><span>Transactions</span></a></li>
+          <li class="nav-item"><a href="loans.html"><i class="fas fa-hand-holding-usd"></i><span>Loans & EMI</span></a></li>
+          <li class="nav-item"><a href="cards.html"><i class="fas fa-credit-card"></i><span>Cards</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SYSTEM</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="reports.html"><i class="fas fa-file-contract"></i><span>Reports</span></a></li>
+          <li class="nav-item"><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+          <li class="nav-item"><a href="profile.html"><i class="fas fa-user-circle"></i><span>Profile</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar session-user-avatar">AW</div>
+          <div class="user-info">
+            <div class="user-name session-user-name">Alexander Wright</div>
+            <div class="user-role session-user-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <div class="global-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search accounts, customers, txns...">
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="topbar-action-btn theme-toggle-btn"><i class="fas fa-moon theme-icon"></i></button>
+          <div style="position: relative;">
+            <button class="topbar-action-btn" id="notificationBtn">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge" id="notificationBadge">3</span>
+            </button>
+            <div class="dropdown-menu notification-dropdown" id="notificationDropdownMenu">
+              <div class="notification-header">
+                <h5>Notifications</h5>
+                <a href="#" onclick="BMS_DB.set(DB_KEYS.NOTIFICATIONS, []); initNotifications();">Clear All</a>
+              </div>
+              <div class="notification-list" id="notificationList"></div>
+            </div>
+          </div>
+
+          <div class="topbar-user-profile">
+            <button class="user-dropdown-btn" id="userProfileDropdownBtn">
+              <div class="avatar session-user-avatar">AW</div>
+              <div class="user-dropdown-info">
+                <div class="name session-user-name">Alexander Wright</div>
+                <div class="role session-user-role">Administrator</div>
+              </div>
+              <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+            </button>
+            <div class="dropdown-menu" id="userDropdownMenu">
+              <div class="dropdown-header">
+                <p class="session-user-name">Alexander Wright</p>
+                <span class="session-user-role">Administrator</span>
+              </div>
+              <a href="profile.html" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
+              <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" onclick="logout()" class="dropdown-item" style="color: var(--danger-color);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>Deposit Money</h2>
+            <p>Deposit cash, cheques, or electronic wire funds into bank accounts.</p>
+          </div>
+        </div>
+
+        <div style="max-width: 680px; margin: 0 auto;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-arrow-down text-success"></i> Fund Deposit Form</h3>
+            </div>
+            <form id="depositForm">
+              <div class="form-group">
+                <label class="form-label">Select Target Account</label>
+                <select class="form-select account-select-dropdown" id="depositAccountSelect" required>
+                  <!-- Populated by JS -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Deposit Amount (Rs.)</label>
+                <div class="input-icon-group">
+                  <i class="fas fa-rupee-sign"></i>
+                  <input type="number" id="depositAmountInput" class="form-control" placeholder="0.00" min="1" step="0.01" required>
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                  <button type="button" class="btn btn-sm btn-outline quick-amount-btn" data-amount="100">+Rs. 100</button>
+                  <button type="button" class="btn btn-sm btn-outline quick-amount-btn" data-amount="500">+Rs. 500</button>
+                  <button type="button" class="btn btn-sm btn-outline quick-amount-btn" data-amount="1000">+Rs. 1,000</button>
+                  <button type="button" class="btn btn-sm btn-outline quick-amount-btn" data-amount="5000">+Rs. 5,000</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Deposit Method</label>
+                <select class="form-select" id="depositMethodSelect">
+                  <option value="Wire Transfer">Electronic Wire Transfer</option>
+                  <option value="Cash Counter">Cash Counter Deposit</option>
+                  <option value="Cheque Deposit">Bank Cheque</option>
+                  <option value="Direct Credit">Direct Payroll Credit</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Reference Note / Remittance ID</label>
+                <input type="text" id="depositNoteInput" class="form-control" placeholder="e.g. Monthly Salary Credit">
+              </div>
+
+              <button type="submit" class="btn btn-success btn-lg" style="width: 100%; margin-top: 1rem;">
+                Process Deposit Immediately <i class="fas fa-check-circle"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/transactions.js"></script>
+</body>
+</html>

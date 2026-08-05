@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Apex Bank Management System</title>
+  <!-- FontAwesome, Chart.js & CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Collapsible Left Sidebar -->
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="logo-brand">
+          <div class="logo-icon"><i class="fas fa-university"></i></div>
+          <div class="logo-text">Apex<span>Bank</span></div>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn" title="Toggle Sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN NAVIGATION</div>
+        <ul class="nav-list">
+          <li class="nav-item active"><a href="dashboard.html"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a></li>
+          <li class="nav-item"><a href="customers.html"><i class="fas fa-users"></i><span>Customers</span></a></li>
+          <li class="nav-item"><a href="accounts.html"><i class="fas fa-wallet"></i><span>Accounts</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SERVICES</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="deposit.html"><i class="fas fa-arrow-down"></i><span>Deposit Money</span></a></li>
+          <li class="nav-item"><a href="withdraw.html"><i class="fas fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li class="nav-item"><a href="transfer.html"><i class="fas fa-exchange-alt"></i><span>Fund Transfer</span></a></li>
+          <li class="nav-item"><a href="transactions.html"><i class="fas fa-list-alt"></i><span>Transactions</span></a></li>
+          <li class="nav-item"><a href="loans.html"><i class="fas fa-hand-holding-usd"></i><span>Loans & EMI</span></a></li>
+          <li class="nav-item"><a href="cards.html"><i class="fas fa-credit-card"></i><span>Cards</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SYSTEM</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="reports.html"><i class="fas fa-file-contract"></i><span>Reports</span></a></li>
+          <li class="nav-item"><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+          <li class="nav-item"><a href="profile.html"><i class="fas fa-user-circle"></i><span>Profile</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar session-user-avatar">AW</div>
+          <div class="user-info">
+            <div class="user-name session-user-name">Alexander Wright</div>
+            <div class="user-role session-user-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Sticky Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <div class="global-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search accounts, customers, txns...">
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Theme Toggle -->
+          <button class="topbar-action-btn theme-toggle-btn" title="Toggle Light/Dark Theme">
+            <i class="fas fa-moon theme-icon"></i>
+          </button>
+
+          <!-- Notifications Bell -->
+          <div style="position: relative;">
+            <button class="topbar-action-btn" id="notificationBtn" title="Notifications">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge" id="notificationBadge">3</span>
+            </button>
+            <div class="dropdown-menu notification-dropdown" id="notificationDropdownMenu">
+              <div class="notification-header">
+                <h5>Notifications</h5>
+                <a href="#" onclick="BMS_DB.set(DB_KEYS.NOTIFICATIONS, []); initNotifications();" style="font-size: 0.75rem;">Clear All</a>
+              </div>
+              <div class="notification-list" id="notificationList"></div>
+            </div>
+          </div>
+
+          <!-- User Profile Dropdown -->
+          <div class="topbar-user-profile">
+            <button class="user-dropdown-btn" id="userProfileDropdownBtn">
+              <div class="avatar session-user-avatar">AW</div>
+              <div class="user-dropdown-info">
+                <div class="name session-user-name">Alexander Wright</div>
+                <div class="role session-user-role">Administrator</div>
+              </div>
+              <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+            </button>
+            <div class="dropdown-menu" id="userDropdownMenu">
+              <div class="dropdown-header">
+                <p class="session-user-name">Alexander Wright</p>
+                <span class="session-user-role">Administrator</span>
+              </div>
+              <a href="profile.html" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
+              <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" onclick="logout()" class="dropdown-item" style="color: var(--danger-color);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Main Content -->
+      <main class="page-content">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>Financial Dashboard Overview</h2>
+            <p>Welcome back! Here is your real-time banking ecosystem summary.</p>
+          </div>
+          <div class="page-actions">
+            <a href="deposit.html" class="btn btn-primary"><i class="fas fa-plus"></i> Quick Deposit</a>
+            <a href="transfer.html" class="btn btn-secondary"><i class="fas fa-paper-plane"></i> Send Funds</a>
+          </div>
+        </div>
+
+        <!-- KPI Metrics Stats Cards -->
+        <div class="stats-grid">
+          <div class="card stat-card">
+            <div class="stat-info">
+              <div class="stat-label">Total Reserve Balance</div>
+              <div class="stat-value" id="dashTotalBalance">Rs. 498,801.25</div>
+              <div class="stat-change positive"><i class="fas fa-arrow-up"></i> 12.4% vs last month</div>
+            </div>
+            <div class="stat-icon primary"><i class="fas fa-university"></i></div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-info">
+              <div class="stat-label">Active Customers</div>
+              <div class="stat-value" id="dashActiveCustomers">5</div>
+              <div class="stat-change positive"><i class="fas fa-user-plus"></i> +2 new this week</div>
+            </div>
+            <div class="stat-icon success"><i class="fas fa-users"></i></div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-info">
+              <div class="stat-label">Total Deposits</div>
+              <div class="stat-value" id="dashTotalDeposits">Rs. 9,500.00</div>
+              <div class="stat-change positive"><i class="fas fa-chart-line"></i> +8.1% inflows</div>
+            </div>
+            <div class="stat-icon warning"><i class="fas fa-arrow-down"></i></div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-info">
+              <div class="stat-label">Active Loan Portfolio</div>
+              <div class="stat-value" id="dashTotalLoans">Rs. 297,000.00</div>
+              <div class="stat-change negative"><i class="fas fa-hand-holding-usd"></i> 3 active loans</div>
+            </div>
+            <div class="stat-icon purple"><i class="fas fa-balance-scale"></i></div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-chart-line text-primary"></i> Cashflow Trajectory (Deposits vs Withdrawals)</h3>
+              <span class="badge badge-primary">2026 Analytics</span>
+            </div>
+            <div style="height: 280px; position: relative;">
+              <canvas id="dashboardIncomeExpenseChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-chart-pie text-primary"></i> Account Distribution</h3>
+            </div>
+            <div style="height: 280px; position: relative;">
+              <canvas id="dashboardAccountTypeChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Transfer & Recent Transactions Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem;">
+          <!-- Quick Transfer Widget -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-paper-plane text-primary"></i> Quick Transfer</h3>
+            </div>
+            <form id="quickTransferForm">
+              <div class="form-group">
+                <label class="form-label">Destination Account</label>
+                <select class="form-select" id="quickToAccount" required>
+                  <option value="ACC-88219401">Sarah Jenkins (ACC-88219401)</option>
+                  <option value="ACC-11029384">Elena Rostova (ACC-11029384)</option>
+                  <option value="ACC-44910293">Marcus Vance (ACC-44910293)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Transfer Amount (Rs.)</label>
+                <input type="number" id="quickAmount" class="form-control" placeholder="100.00" min="1" step="0.01" required>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+                Send Funds Now <i class="fas fa-arrow-right"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Recent Transactions Table -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-history text-primary"></i> Recent Transactions</h3>
+              <a href="transactions.html" style="font-size: 0.85rem; font-weight: 600;">View All Ledgers &rarr;</a>
+            </div>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Txn ID</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recentTxnTableBody">
+                  <!-- Dynamically populated by dashboard.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

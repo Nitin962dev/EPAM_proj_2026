@@ -1,0 +1,298 @@
+/* ==========================================================================
+   PAGE SPECIFIC & FEATURE COMPONENT STYLES
+   ========================================================================== */
+
+/* Auth Screens (Login / Register) */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-page::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(0,0,0,0) 70%);
+  top: -100px;
+  right: -100px;
+  border-radius: 50%;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .auth-card {
+  background: rgba(21, 28, 44, 0.95);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.auth-brand {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-brand .logo-icon {
+  margin: 0 auto 0.85rem auto;
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
+}
+
+.auth-brand h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.auth-brand p {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.demo-credentials-box {
+  background-color: var(--primary-50);
+  border: 1px dashed var(--primary-300);
+  border-radius: var(--border-radius-md);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+}
+
+[data-theme="dark"] .demo-credentials-box {
+  background-color: rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.demo-credentials-box p {
+  font-weight: 700;
+  color: var(--primary-700);
+  margin-bottom: 0.35rem;
+}
+
+.quick-demo-btn {
+  display: inline-block;
+  background-color: var(--primary-600);
+  color: #ffffff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  margin-right: 0.35rem;
+}
+
+/* 3D Bank Cards (Cards Page) */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.bank-card-wrapper {
+  perspective: 1000px;
+  height: 200px;
+  cursor: pointer;
+}
+
+.bank-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: 18px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
+}
+
+.bank-card-wrapper:hover .bank-card-inner,
+.bank-card-wrapper.flipped .bank-card-inner {
+  transform: rotateY(180deg);
+}
+
+.bank-card-front, .bank-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 18px;
+  padding: 1.5rem;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bank-card-front {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+}
+
+.card-theme-black {
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+}
+
+.card-theme-purple {
+  background: linear-gradient(135deg, #581c87 0%, #9333ea 100%);
+}
+
+.bank-card-front .card-chip {
+  width: 42px;
+  height: 30px;
+  background: linear-gradient(135deg, #fbbf24, #d97706);
+  border-radius: 6px;
+}
+
+.bank-card-front .card-number {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.25rem;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+.bank-card-front .card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: none;
+  padding: 0;
+}
+
+.card-holder-name {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+.card-exp {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.bank-card-back {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  transform: rotateY(180deg);
+  padding: 1rem 0;
+}
+
+.magnetic-strip {
+  width: 100%;
+  height: 40px;
+  background-color: #000000;
+  margin-top: 0.5rem;
+}
+
+.cvv-box {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 0.35rem 0.85rem;
+  border-radius: 4px;
+  text-align: right;
+  font-family: monospace;
+  font-weight: 700;
+  width: 80%;
+  margin: 0.75rem auto;
+}
+
+/* Loan EMI Calculator */
+.calculator-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.slider-group {
+  margin-bottom: 1.75rem;
+}
+
+.slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.slider-header span {
+  font-weight: 700;
+  color: var(--primary-600);
+}
+
+.range-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border-color);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-600);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+}
+
+/* Receipt Preview Dialog */
+.receipt-box {
+  background-color: var(--bg-surface-secondary);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.receipt-status-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--success-bg);
+  color: var(--success-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin: 0 auto 1rem auto;
+}
+
+.receipt-amount {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.receipt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--divider-color);
+  font-size: 0.875rem;
+}
+
+.receipt-row span:first-child {
+  color: var(--text-muted);
+}
+.receipt-row span:last-child {
+  font-weight: 600;
+  color: var(--text-main);
+}

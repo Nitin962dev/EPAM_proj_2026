@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loans & EMI Calculator - Apex Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="logo-brand">
+          <div class="logo-icon"><i class="fas fa-university"></i></div>
+          <div class="logo-text">Apex<span>Bank</span></div>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn"><i class="fas fa-chevron-left"></i></button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN NAVIGATION</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="dashboard.html"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a></li>
+          <li class="nav-item"><a href="customers.html"><i class="fas fa-users"></i><span>Customers</span></a></li>
+          <li class="nav-item"><a href="accounts.html"><i class="fas fa-wallet"></i><span>Accounts</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SERVICES</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="deposit.html"><i class="fas fa-arrow-down"></i><span>Deposit Money</span></a></li>
+          <li class="nav-item"><a href="withdraw.html"><i class="fas fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li class="nav-item"><a href="transfer.html"><i class="fas fa-exchange-alt"></i><span>Fund Transfer</span></a></li>
+          <li class="nav-item"><a href="transactions.html"><i class="fas fa-list-alt"></i><span>Transactions</span></a></li>
+          <li class="nav-item active"><a href="loans.html"><i class="fas fa-hand-holding-usd"></i><span>Loans & EMI</span></a></li>
+          <li class="nav-item"><a href="cards.html"><i class="fas fa-credit-card"></i><span>Cards</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SYSTEM</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="reports.html"><i class="fas fa-file-contract"></i><span>Reports</span></a></li>
+          <li class="nav-item"><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+          <li class="nav-item"><a href="profile.html"><i class="fas fa-user-circle"></i><span>Profile</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar session-user-avatar">AW</div>
+          <div class="user-info">
+            <div class="user-name session-user-name">Alexander Wright</div>
+            <div class="user-role session-user-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <div class="global-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search accounts, customers, txns...">
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="topbar-action-btn theme-toggle-btn"><i class="fas fa-moon theme-icon"></i></button>
+          <div style="position: relative;">
+            <button class="topbar-action-btn" id="notificationBtn">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge" id="notificationBadge">3</span>
+            </button>
+            <div class="dropdown-menu notification-dropdown" id="notificationDropdownMenu">
+              <div class="notification-header">
+                <h5>Notifications</h5>
+                <a href="#" onclick="BMS_DB.set(DB_KEYS.NOTIFICATIONS, []); initNotifications();">Clear All</a>
+              </div>
+              <div class="notification-list" id="notificationList"></div>
+            </div>
+          </div>
+
+          <div class="topbar-user-profile">
+            <button class="user-dropdown-btn" id="userProfileDropdownBtn">
+              <div class="avatar session-user-avatar">AW</div>
+              <div class="user-dropdown-info">
+                <div class="name session-user-name">Alexander Wright</div>
+                <div class="role session-user-role">Administrator</div>
+              </div>
+              <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+            </button>
+            <div class="dropdown-menu" id="userDropdownMenu">
+              <div class="dropdown-header">
+                <p class="session-user-name">Alexander Wright</p>
+                <span class="session-user-role">Administrator</span>
+              </div>
+              <a href="profile.html" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
+              <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" onclick="logout()" class="dropdown-item" style="color: var(--danger-color);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>Loans & EMI Calculator</h2>
+            <p>Calculate monthly EMI installments and manage active credit facilities.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-primary" onclick="openModal('applyLoanModal')"><i class="fas fa-hand-holding-usd"></i> Apply for Loan</button>
+          </div>
+        </div>
+
+        <!-- Interactive EMI Calculator Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;" id="loanEmiCalculator">
+          <!-- Sliders Card -->
+          <div class="calculator-card">
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.5rem;"><i class="fas fa-calculator text-primary"></i> Interactive EMI Calculator</h3>
+            
+            <div class="slider-group">
+              <div class="slider-header">
+                <label class="form-label" style="margin: 0;">Principal Amount</label>
+                <span id="principalValue">Rs. 100,000</span>
+              </div>
+              <input type="range" class="range-slider" id="principalSlider" min="10000" max="500000" step="5000" value="100000">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <label class="form-label" style="margin: 0;">Annual Interest Rate (%)</label>
+                <span id="rateValue">6.5%</span>
+              </div>
+              <input type="range" class="range-slider" id="rateSlider" min="1" max="18" step="0.1" value="6.5">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <label class="form-label" style="margin: 0;">Loan Tenure (Months)</label>
+                <span id="tenureValue">60 Months</span>
+              </div>
+              <input type="range" class="range-slider" id="tenureSlider" min="6" max="360" step="6" value="60">
+            </div>
+          </div>
+
+          <!-- Calculation Summary Output Card -->
+          <div class="calculator-card" style="display: flex; flex-direction: column; justify-content: space-between; background: linear-gradient(135deg, #1e3a8a, #1e40af); color: #ffffff;">
+            <div>
+              <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.8;">ESTIMATED MONTHLY INSTALLMENT</span>
+              <div style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0;" id="calcEmiDisplay">Rs. 1,956.61</div>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); border-radius: var(--border-radius-md); padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.9rem;">
+                <span style="opacity: 0.8;">Total Amount Payable:</span>
+                <strong id="calcTotalPayDisplay">Rs. 117,396.60</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                <span style="opacity: 0.8;">Total Interest Payable:</span>
+                <strong id="calcTotalIntDisplay" style="color: #fbbf24;">Rs. 17,396.60</strong>
+              </div>
+            </div>
+
+            <button class="btn btn-success btn-lg" style="width: 100%; margin-top: 1rem;" onclick="openModal('applyLoanModal')">
+              Apply For This Rate <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Active Loans List -->
+        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 1rem;"><i class="fas fa-list text-primary"></i> Active Customer Loans</h3>
+        <div id="loansContainer">
+          <!-- Populated by loans.js -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Apply For Loan Modal -->
+  <div class="modal-backdrop" id="applyLoanModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-hand-holding-usd text-primary"></i> Apply For Loan</h4>
+        <button class="modal-close-btn" onclick="closeModal('applyLoanModal')">&times;</button>
+      </div>
+      <form id="applyLoanForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Borrower Full Name</label>
+            <input type="text" id="loanBorrower" class="form-control" placeholder="e.g. Sarah Jenkins" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Loan Facility Type</label>
+            <select class="form-select" id="loanTypeSelect">
+              <option value="Home Mortgage">Home Mortgage Loan</option>
+              <option value="Auto Loan">Auto Vehicle Loan</option>
+              <option value="Commercial Expansion">Commercial Business Loan</option>
+              <option value="Personal Loan">Personal Credit Loan</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Requested Principal Amount (Rs.)</label>
+            <input type="number" id="loanAmountInput" class="form-control" placeholder="50000" min="1000" step="100" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Interest Rate (% per annum)</label>
+            <input type="number" id="loanRateInput" class="form-control" placeholder="5.5" min="0.1" step="0.1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tenure (Months)</label>
+            <input type="number" id="loanTenureInput" class="form-control" placeholder="48" min="6" step="6" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('applyLoanModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Approve & Disburse Loan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/loans.js"></script>
+</body>
+</html>

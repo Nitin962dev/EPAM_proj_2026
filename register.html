@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Apex Bank Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="logo-icon">
+        <i class="fas fa-user-plus"></i>
+      </div>
+      <h3>Open Bank Account</h3>
+      <p>Instant digital onboarding & Rs. 500 welcome bonus</p>
+    </div>
+
+    <form id="registerForm">
+      <div class="form-group">
+        <label class="form-label" for="regName">Full Legal Name</label>
+        <div class="input-icon-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="regName" class="form-control" placeholder="e.g. John Doe" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="regEmail">Email Address</label>
+        <div class="input-icon-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="regEmail" class="form-control" placeholder="john@example.com" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="regPhone">Phone Number</label>
+        <div class="input-icon-group">
+          <i class="fas fa-phone"></i>
+          <input type="tel" id="regPhone" class="form-control" placeholder="+1 (555) 000-1234">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="regPassword">Account Password</label>
+        <div class="input-icon-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="regPassword" class="form-control" placeholder="Minimum 6 characters" required>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.5rem; font-size: 0.825rem;">
+        <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer;">
+          <input type="checkbox" required style="margin-top: 3px;">
+          <span>I agree to the <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+        Complete Onboarding <i class="fas fa-check-circle"></i>
+      </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
+      Already have an account? <a href="login.html" style="font-weight: 700;">Sign In Instead</a>
+    </div>
+  </div>
+
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Apex Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="logo-brand">
+          <div class="logo-icon"><i class="fas fa-university"></i></div>
+          <div class="logo-text">Apex<span>Bank</span></div>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn"><i class="fas fa-chevron-left"></i></button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN NAVIGATION</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="dashboard.html"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a></li>
+          <li class="nav-item"><a href="customers.html"><i class="fas fa-users"></i><span>Customers</span></a></li>
+          <li class="nav-item"><a href="accounts.html"><i class="fas fa-wallet"></i><span>Accounts</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SERVICES</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="deposit.html"><i class="fas fa-arrow-down"></i><span>Deposit Money</span></a></li>
+          <li class="nav-item"><a href="withdraw.html"><i class="fas fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li class="nav-item"><a href="transfer.html"><i class="fas fa-exchange-alt"></i><span>Fund Transfer</span></a></li>
+          <li class="nav-item"><a href="transactions.html"><i class="fas fa-list-alt"></i><span>Transactions</span></a></li>
+          <li class="nav-item"><a href="loans.html"><i class="fas fa-hand-holding-usd"></i><span>Loans & EMI</span></a></li>
+          <li class="nav-item"><a href="cards.html"><i class="fas fa-credit-card"></i><span>Cards</span></a></li>
+        </ul>
+
+        <div class="nav-section-label">SYSTEM</div>
+        <ul class="nav-list">
+          <li class="nav-item"><a href="reports.html"><i class="fas fa-file-contract"></i><span>Reports</span></a></li>
+          <li class="nav-item active"><a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+          <li class="nav-item"><a href="profile.html"><i class="fas fa-user-circle"></i><span>Profile</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar session-user-avatar">AW</div>
+          <div class="user-info">
+            <div class="user-name session-user-name">Alexander Wright</div>
+            <div class="user-role session-user-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <div class="global-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search accounts, customers, txns...">
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="topbar-action-btn theme-toggle-btn"><i class="fas fa-moon theme-icon"></i></button>
+          <div style="position: relative;">
+            <button class="topbar-action-btn" id="notificationBtn">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge" id="notificationBadge">3</span>
+            </button>
+            <div class="dropdown-menu notification-dropdown" id="notificationDropdownMenu">
+              <div class="notification-header">
+                <h5>Notifications</h5>
+                <a href="#" onclick="BMS_DB.set(DB_KEYS.NOTIFICATIONS, []); initNotifications();">Clear All</a>
+              </div>
+              <div class="notification-list" id="notificationList"></div>
+            </div>
+          </div>
+
+          <div class="topbar-user-profile">
+            <button class="user-dropdown-btn" id="userProfileDropdownBtn">
+              <div class="avatar session-user-avatar">AW</div>
+              <div class="user-dropdown-info">
+                <div class="name session-user-name">Alexander Wright</div>
+                <div class="role session-user-role">Administrator</div>
+              </div>
+              <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+            </button>
+            <div class="dropdown-menu" id="userDropdownMenu">
+              <div class="dropdown-header">
+                <p class="session-user-name">Alexander Wright</p>
+                <span class="session-user-role">Administrator</span>
+              </div>
+              <a href="profile.html" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
+              <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" onclick="logout()" class="dropdown-item" style="color: var(--danger-color);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>System Settings</h2>
+            <p>Customize system appearance, security policies, and data management.</p>
+          </div>
+        </div>
+
+        <div style="max-width: 720px;">
+          <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-sliders-h text-primary"></i> System Preferences</h3>
+            </div>
+            <form id="settingsForm">
+              <div class="form-group">
+                <label class="form-label">Theme Appearance</label>
+                <select class="form-select" id="settingsTheme">
+                  <option value="light">Light Theme (Blue & Crisp White)</option>
+                  <option value="dark">Dark Theme (Deep Slate)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Default Operating Currency</label>
+                <select class="form-select" id="settingsCurrency">
+                  <option value="INR (Rs.)" selected>INR (Rs.) - Indian Rupee</option>
+                  <option value="USD ($)">USD ($) - US Dollar</option>
+                  <option value="EUR (€)">EUR (€) - Euro</option>
+                  <option value="GBP (£)">GBP (£) - British Pound</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0;">
+                <div>
+                  <strong>Email & In-App Notifications</strong>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">Receive alerts on major deposits and loan updates</div>
+                </div>
+                <input type="checkbox" id="settingsNotifications" checked style="width: 20px; height: 20px;">
+              </div>
+
+              <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0;">
+                <div>
+                  <strong>Two-Factor Authentication (2FA)</strong>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">Enforce OTP verification for high-value transfers</div>
+                </div>
+                <input type="checkbox" id="settings2FA" checked style="width: 20px; height: 20px;">
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                Save Preferences <i class="fas fa-save"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Data Reset Zone -->
+          <div class="card" style="border-color: var(--danger-border); background-color: var(--danger-bg);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <h4 style="color: var(--danger-color); font-weight: 700;"><i class="fas fa-exclamation-triangle"></i> Reset System LocalStorage Data</h4>
+                <p style="font-size: 0.85rem; color: var(--text-main); margin-top: 0.25rem;">Wipe custom entries and restore all customer, account, and transaction tables to initial default seed state.</p>
+              </div>
+              <button class="btn btn-danger" onclick="resetAllData()"><i class="fas fa-trash-alt"></i> Reset All Data</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/settings.js"></script>
+</body>
+</html>
